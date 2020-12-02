@@ -21,6 +21,27 @@
 
         <button class="btn btn-primary">Get Weather</button>
       </form>
+
+      <div id="weather-details-container"></div>
+
+      <template id="weather-details-template">
+        <div class="card text-white bg-dark mt-3">
+          <h5 class="card-header">
+            <span id="weather-details-header-text"></span>
+
+            <img id="weather-details-header-image" src="" alt="" />
+          </h5>
+
+          <div class="card-body">
+            <p class="card-text">
+              <b>description:</b> <span id="weather-details-description"></span>
+            </p>
+            <p class="card-text">
+              <b>temperature:</b> <span id="weather-details-temperature"></span>
+            </p>
+          </div>
+        </div>
+      </template>
     </div>
   </body>
 </html>
