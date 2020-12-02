@@ -10,8 +10,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: "Weather Map",
-      favicon: "src/assets/favicon.ico",
+      filename: "index.html",
+      template: "src/index.html",
     }),
     new ForkTsCheckerWebpackPlugin({
       eslint: {
