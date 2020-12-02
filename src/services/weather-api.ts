@@ -1,14 +1,16 @@
 import { WeatherResponse } from "../models/weather-response";
 import { WeatherNotFoundResponse } from "../models/weather-not-found-response";
+import { CoordinatesWeatherRequestData } from "../models/coordinates-weather-request-data";
+import { CityCountryWeatherRequestData } from "../models/city-country-weather-request-data";
 
 export class WeatherApi {
   private readonly baseUrl = "http://api.openweathermap.org/data/2.5/weather";
   private readonly appId = "df2f0ccf23547ccff8b15b21af49ae31";
 
   async getWeatherByCityAndCountry(
-    city: string,
-    country: string
+    data: CityCountryWeatherRequestData
   ): Promise<WeatherResponse> {
+    const { city, country } = data;
     const url = new URL(this.baseUrl);
     url.searchParams.append("q", `${city},${country}`);
 
@@ -18,9 +20,9 @@ export class WeatherApi {
   }
 
   async getWeatherByLatitudeAndLongitude(
-    latitude: number,
-    longitude: number
+    data: CoordinatesWeatherRequestData
   ): Promise<WeatherResponse> {
+    const { longitude, latitude } = data;
     const url = new URL(this.baseUrl);
     url.searchParams.append("lon", `${longitude}`);
     url.searchParams.append("lat", `${latitude}`);

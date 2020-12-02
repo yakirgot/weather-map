@@ -10,7 +10,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: "Weather Map",
+      filename: "index.html",
+      template: "src/index.html",
       favicon: "src/assets/favicon.ico",
     }),
     new ForkTsCheckerWebpackPlugin({
