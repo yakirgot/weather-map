@@ -1,0 +1,59 @@
+{
+  "name": "weather-map",
+  "version": "0.0.0",
+  "description": "A weather map",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "start": "webpack serve --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "stylelint": "npx stylelint \"./src/**/*.css\" --allow-empty-input"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yakirgot/weather-map.git"
+  },
+  "author": "Yakir Gottesman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yakirgot/weather-map/issues"
+  },
+  "homepage": "https://github.com/yakirgot/weather-map#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@semantic-release/github": "^7.2.0",
+    "@types/jest": "^26.0.16",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^5.0.1",
+    "cssnano": "^4.1.10",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "fork-ts-checker-webpack-plugin": "^6.0.4",
+    "html-webpack-plugin": "^4.5.0",
+    "jest": "^26.6.3",
+    "postcss": "^8.1.10",
+    "postcss-loader": "^4.1.0",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
+    "semantic-release": "^17.3.0",
+    "style-loader": "^2.0.0",
+    "stylelint": "^13.8.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.1.0",
+    "ts-loader": "^8.0.11",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.1.2",
+    "webpack": "^5.9.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.4.0"
+  }
+}
