@@ -35,6 +35,7 @@ export class WeatherApi {
   private async getWeatherRequest(url: URL): Promise<WeatherResponse> {
     try {
       url.searchParams.append("appid", this.appId);
+      url.searchParams.append("units", "metric");
 
       const request = await fetch(url.toString());
       const json:
