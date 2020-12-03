@@ -43,11 +43,11 @@ export class WeatherApi {
     url.searchParams.append("units", "metric");
 
     try {
-      const request = await this.getRequestFromCacheOrServer(url.toString());
+      const response = await this.getRequestFromCacheOrServer(url.toString());
 
       const json:
         | WeatherResponse
-        | WeatherNotFoundResponse = await request.json();
+        | WeatherNotFoundResponse = await response.json();
 
       if (json.cod === 200) {
         return json as WeatherResponse;
