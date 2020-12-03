@@ -2,10 +2,16 @@ import { WeatherResponse } from "../models/weather-response";
 import { WeatherNotFoundResponse } from "../models/weather-not-found-response";
 import { CoordinatesWeatherRequestData } from "../models/coordinates-weather-request-data";
 import { CityCountryWeatherRequestData } from "../models/city-country-weather-request-data";
+import { WeatherCache } from "./weather-cache";
 
 export class WeatherApi {
   private readonly baseUrl = "http://api.openweathermap.org/data/2.5/weather";
   private readonly appId = "df2f0ccf23547ccff8b15b21af49ae31";
+  private readonly weatherCache: WeatherCache;
+
+  constructor() {
+    this.weatherCache = new WeatherCache();
+  }
 
   async getWeatherByCityAndCountry(
     data: CityCountryWeatherRequestData
@@ -33,14 +39,15 @@ export class WeatherApi {
   }
 
   private async getWeatherRequest(url: URL): Promise<WeatherResponse> {
-    try {
-      url.searchParams.append("appid", this.appId);
-      url.searchParams.append("units", "metric");
+    url.searchParams.append("appid", this.appId);
+    url.searchParams.append("units", "metric");
 
-      const request = await fetch(url.toString());
+    try {
+      const response = await this.getRequestFromCacheOrServer(url.toString());
+
       const json:
         | WeatherResponse
-        | WeatherNotFoundResponse = await request.json();
+        | WeatherNotFoundResponse = await response.json();
 
       if (json.cod === 200) {
         return json as WeatherResponse;
@@ -49,6 +56,18 @@ export class WeatherApi {
       }
     } catch (e) {
       return Promise.reject(e.message);
+    }
+  }
+
+  private async getRequestFromCacheOrServer(url: string): Promise<Response> {
+    const cacheResponse = await this.weatherCache.retrieveFromCache(url);
+
+    if (cacheResponse) {
+      return cacheResponse;
+    } else {
+      await this.weatherCache.addToCache(url);
+
+      return await fetch(url);
     }
   }
 }
