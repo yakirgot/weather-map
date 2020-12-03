@@ -6,10 +6,6 @@
   --tea-green: #c2eaba;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 body {
   background: var(--mint-cream);
   display: grid;
@@ -29,10 +25,14 @@ body {
 }
 
 #location-form {
-  max-width: 100%;
   width: 400px;
 }
 
 #location-form .form-group {
   width: 100%;
+}
+
+.location-form-buttons {
+  display: flex;
+  justify-content: space-between;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Weather Map</title>
@@ -19,7 +19,13 @@
           <input class="form-control" id="location-country-input" required />
         </div>
 
-        <button class="btn btn-primary">Get Weather</button>
+        <div class="location-form-buttons">
+          <button class="btn btn-primary">Get Weather</button>
+
+          <button class="btn btn-secondary" id="random-location-button">
+            Random Location
+          </button>
+        </div>
       </form>
 
       <div id="weather-details-container"></div>
