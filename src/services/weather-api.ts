@@ -43,20 +43,7 @@ export class WeatherApi {
     url.searchParams.append("units", "metric");
 
     try {
-      const urlString = url.toString();
-
-      const cacheResponse = await this.weatherCache.retrieveFromCache(
-        urlString
-      );
-
-      let request: Response;
-      if (cacheResponse) {
-        request = cacheResponse;
-      } else {
-        await this.weatherCache.addToCache(urlString);
-
-        request = await fetch(urlString);
-      }
+      const request = await this.getRequestFromCacheOrServer(url.toString());
 
       const json:
         | WeatherResponse
@@ -69,6 +56,18 @@ export class WeatherApi {
       }
     } catch (e) {
       return Promise.reject(e.message);
+    }
+  }
+
+  private async getRequestFromCacheOrServer(url: string): Promise<Response> {
+    const cacheResponse = await this.weatherCache.retrieveFromCache(url);
+
+    if (cacheResponse) {
+      return cacheResponse;
+    } else {
+      await this.weatherCache.addToCache(url);
+
+      return await fetch(url);
     }
   }
 }
