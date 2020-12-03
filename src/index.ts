@@ -11,8 +11,17 @@ function initWeatherMap(): void {
   document.addEventListener(
     "weatherFormSubmit",
     (event: CustomEvent<CityCountryWeatherRequestData>) =>
-      weatherDetails.updateWeatherDetails(event)
+      weatherDetails.updateWeatherDetailsByCityCountry(event)
   );
+
+  const randomLocationButton = document.querySelector(
+    "#random-location-button"
+  );
+  if (randomLocationButton) {
+    randomLocationButton.addEventListener("click", () => {
+      weatherDetails.updateWeatherDetailsByRandomLocation();
+    });
+  }
 }
 
 initWeatherMap();
