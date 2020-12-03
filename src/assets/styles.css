@@ -20,12 +20,9 @@ body {
   background: var(--aero-blue);
   border-radius: 4px;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
+  max-width: 400px;
   padding: 16px;
-}
-
-#location-form {
-  width: 400px;
+  width: 100%;
 }
 
 #location-form .form-group {
