@@ -18,46 +18,6 @@ export class WeatherDetails {
     );
   }
 
-  updateWeatherDetails(
-    event: CustomEvent<CityCountryWeatherRequestData>
-  ): void {
-    void this.weatherApi
-      .getWeatherByCityAndCountry(event.detail)
-      .then((weatherResponse: WeatherResponse) => {
-        const headerText = weatherResponse.weather[0].main;
-        const headerImageUrl = weatherResponse.weather[0].icon;
-        const description = weatherResponse.weather[0].description;
-        const temperatureInCelsius = Math.round(weatherResponse.main.temp);
-
-        const model = new WeatherDetailsModel();
-        model.headerText = `${headerText} at ${weatherResponse.name}`;
-        if (headerImageUrl) {
-          model.headerImageUrl = `http://openweathermap.org/img/wn/${headerImageUrl}@2x.png`;
-        }
-        model.description = description;
-        model.temperatureInCelsius = temperatureInCelsius;
-
-        if (!this.weatherDetailsTemplate || !this.weatherDetailsContainer) {
-          return;
-        }
-
-        const firstElementChild: Element | null = this.weatherDetailsTemplate
-          .content.firstElementChild;
-
-        if (firstElementChild) {
-          this.weatherDetailsContainer.innerHTML = "";
-          WeatherDetails.populateDetailsElementWithDetails(
-            model,
-            firstElementChild
-          );
-
-          const clone: Node = firstElementChild.cloneNode(true);
-
-          this.weatherDetailsContainer.appendChild(clone);
-        }
-      });
-  }
-
   private static populateDetailsElementWithDetails(
     weatherDetails: WeatherDetailsModel,
     element: Element
@@ -98,5 +58,61 @@ export class WeatherDetails {
         temperatureElement.textContent = `${temperatureInCelsius}℃`;
       }
     }
+  }
+
+  updateWeatherDetails(
+    event: CustomEvent<CityCountryWeatherRequestData>
+  ): void {
+    this.weatherApi
+      .getWeatherByCityAndCountry(event.detail)
+      .then((weatherResponse: WeatherResponse) => {
+        const headerText = weatherResponse.weather[0].main;
+        const headerImageUrl = weatherResponse.weather[0].icon;
+        const description = weatherResponse.weather[0].description;
+        const temperatureInCelsius = Math.round(weatherResponse.main.temp);
+
+        const model = new WeatherDetailsModel();
+        model.headerText = `${headerText} at ${weatherResponse.name}`;
+        if (headerImageUrl) {
+          model.headerImageUrl = `http://openweathermap.org/img/wn/${headerImageUrl}@2x.png`;
+        }
+        model.description = description;
+        model.temperatureInCelsius = temperatureInCelsius;
+
+        if (!this.weatherDetailsTemplate || !this.weatherDetailsContainer) {
+          return;
+        }
+
+        const firstElementChild: Element | null = this.weatherDetailsTemplate
+          .content.firstElementChild;
+
+        if (firstElementChild) {
+          this.weatherDetailsContainer.innerHTML = "";
+          WeatherDetails.populateDetailsElementWithDetails(
+            model,
+            firstElementChild
+          );
+
+          const clone: Node = firstElementChild.cloneNode(true);
+
+          this.weatherDetailsContainer.appendChild(clone);
+        }
+      })
+      .catch(this.showError.bind(this));
+  }
+
+  private showError(error: string): void {
+    if (!this.weatherDetailsContainer) {
+      return;
+    }
+
+    this.weatherDetailsContainer.textContent = "";
+
+    const div = document.createElement("div");
+    div.classList.add("alert", "alert-danger", "mt-3");
+    div.setAttribute("role", "alert");
+    div.textContent = error;
+
+    this.weatherDetailsContainer.appendChild(div);
   }
 }
